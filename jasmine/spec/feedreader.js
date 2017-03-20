@@ -74,6 +74,12 @@ $(function() {
 
             // check that the click event has indeed made the menu visible
             expect($('.menu-hidden').size()).toEqual(0);
+
+            $('.menu-icon-link').trigger('click');
+
+            // check that the click event has indeed made the menu invisible again
+            expect($('.menu-hidden').size()).toEqual(1);
+
         });
 
     });
