@@ -137,26 +137,20 @@ $(function() {
                 currentFeedUrls.push($(this).attr('href'));
             });
 
-            /* 
-             * If the number of feeds is the same, then we need to check that
-             * the content has actually changed
+            /*
+             * We check that the content has changed by checking whether a URL
+             * that originally was in the feed is gone.
              */
-            if (initialFeedUrls.length == currentFeedUrls.length) {
-                
-                /*
-                 * We check that the content has changed by checking whether a URL
-                 * that originally was in the feed is gone.
-                 */
-                var matchCount = 0;
-                initialFeedUrls.forEach(function(initialUrl) {
-                    if (currentFeedUrls.includes(initialUrl)) {
-                        matchCount += 1;
-                    }
-                });
+            var matchCount = 0;
+            initialFeedUrls.forEach(function(initialUrl) {
+                if (currentFeedUrls.includes(initialUrl)) {
+                    matchCount += 1;
+                }
+            });
 
-                // There should be at least one different Url
-                expect(matchCount).not.toEqual(initialFeedUrls.length);
-            }
+            // There should be at least one different Url
+            expect(matchCount).not.toEqual(initialFeedUrls.length);
+
 
             done();
         });
