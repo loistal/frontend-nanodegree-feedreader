@@ -99,10 +99,61 @@ $(function() {
         });
     });
 
-    /* TODO: Write a new test suite named "New Feed Selection"
+    /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection ', function() {
+
+        var initialFeedUrls = [];
+
+        beforeEach(function(done) {
+            loadFeed(0, function() {
+
+                // Store all the Urls from the 1st feed
+                $('.feed .entry-link').each(function(index) {
+                    initialFeedUrls.push($(this).attr('href'));
+                });
+
+                loadFeed(1, function() {
+                    done();
+                });
+            });
+        });
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        it('changes the content', function(done) {
+
+            var currentFeedUrls = [];
+
+            // Get all the Urls from the current feed
+            $('.feed .entry-link').each(function(index) {
+                currentFeedUrls.push($(this).attr('href'));
+            });
+
+            /* 
+             * If the number of feeds is the same, then we need to check that
+             * the content has actually changed
+             */
+            if (initialFeedUrls.length == currentFeedUrls.length) {
+                
+                /*
+                 * We check that the content has changed by checking whether a URL
+                 * that originally was in the feed is gone.
+                 */
+                var matchCount = 0;
+                initialFeedUrls.forEach(function(initialUrl) {
+                    if (currentFeedUrls.includes(initialUrl)) {
+                        matchCount += 1;
+                    }
+                });
+
+                // There should be at least one different Url
+                expect(matchCount).not.toEqual(initialFeedUrls.length);
+            }
+
+            done();
+        });
+    });
+
 }());
